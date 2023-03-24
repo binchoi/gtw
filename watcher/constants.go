@@ -1,4 +1,4 @@
-package main
+package watcher
 
 const (
 	Red    = "\033[31m"
