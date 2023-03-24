@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	playingWithFsnotify()
+	watcher()
 }
 
 func runTests() {
@@ -17,14 +17,16 @@ func runTests() {
 
 	stdoutStderr, err := cmd.CombinedOutput()
 	fmt.Println("Test has run")
+	defaultColor := Green
 	if err != nil {
-		fmt.Printf("Error has occurred: %s", err.Error())
+		fmt.Printf(Red+"Error has occurred: %s"+Red, err.Error())
+		defaultColor = Red
 	}
-	fmt.Printf("%s\n", stdoutStderr)
+	fmt.Printf(defaultColor+"%s\n"+defaultColor, stdoutStderr)
 	fmt.Println("========================================")
 }
 
-func playingWithFsnotify() {
+func watcher() {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Fatal(err)

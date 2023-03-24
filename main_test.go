@@ -16,5 +16,5 @@ type MainSuite struct {
 
 func (s *MainSuite) TestMain() {
 	s.Equal(1, 1)
-	s.Equal(10000, 10000)
+	s.Equal(10000, 1000)
 }
