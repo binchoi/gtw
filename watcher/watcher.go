@@ -8,8 +8,8 @@ import (
 	"github.com/fsnotify/fsnotify"
 )
 
-func runTests() {
-	cmd := exec.Command("go", "test", "-v")
+func runTests(path string) {
+	cmd := exec.Command("go", "test", "-v", path)
 
 	stdoutStderr, err := cmd.CombinedOutput()
 	fmt.Println("Test has run")
@@ -22,7 +22,9 @@ func runTests() {
 	fmt.Println("========================================")
 }
 
-func StartWatcher() {
+func StartWatcher(path string) {
+	log.Printf("> Test directory path: %s\n", path)
+
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Fatal(err)
@@ -44,7 +46,7 @@ func StartWatcher() {
 				//fmt.Println("event:", event)
 				if event.Op&fsnotify.Write == fsnotify.Write {
 					fmt.Println("modified file:", event.Name)
-					runTests()
+					runTests(path)
 				}
 			case err := <-watcher.Errors:
 				fmt.Println("error:", err)
